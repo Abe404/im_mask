@@ -15,6 +15,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import os
 import argparse
+from glob import glob
 from skimage.io import imread, imsave
 
 parser = argparse.ArgumentParser()
@@ -34,9 +35,9 @@ def save_masked_image(fname, mask_dir, image_dir, masked_dir):
     # use alpha channel if rgba
     if len(os.path.shape) > 2:
         seg = seg[:, :, 2]
-    im = imread(os.path.join(image_dir, fname))
+    im = imread(glob(os.path.join(image_dir, os.path.basename(fname) + '.*'))[0])
     im[seg==0] = 0
-    imsave(os.path.join(masked_dir, im))
+    imsave(os.path.join(masked_dir, os.path.basename(fname) + '.jpg'), im)
 
 
 def process_images(mask_fnames, mask_dir, image_dir, masked_dir):
