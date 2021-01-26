@@ -35,10 +35,8 @@ def save_masked_image(fname, mask_dir, image_dir, masked_dir):
     # use alpha channel if rgba
     if len(seg.shape) > 2:
         seg = seg[:, :, 2]
-    im_path = os.path.join(image_dir, os.path.basename(fname)) + '.*'
-    print(im_path)
+    im_path = os.path.join(image_dir, os.path.splitext(fname)[0]) + '.*'
     glob_results = glob(im_path)
-    print(glob_results)
     im = imread(glob_results[0])
     im[seg==0] = 0
     imsave(os.path.join(masked_dir, os.path.basename(fname) + '.jpg'), im)
