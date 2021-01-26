@@ -33,9 +33,13 @@ parser.add_argument('--outputdir',
 def save_masked_image(fname, mask_dir, image_dir, masked_dir):
     seg = imread(os.path.join(mask_dir, fname))
     # use alpha channel if rgba
-    if len(os.path.shape) > 2:
+    if len(seg.shape) > 2:
         seg = seg[:, :, 2]
-    im = imread(glob(os.path.join(image_dir, os.path.basename(fname) + '.*'))[0])
+    im_path = os.path.join(image_dir, os.path.basename(fname)) + '.*'
+    print(im_path)
+    glob_results = glob(im_path)
+    print(glob_results)
+    im = imread(glob_results[0])
     im[seg==0] = 0
     imsave(os.path.join(masked_dir, os.path.basename(fname) + '.jpg'), im)
 
@@ -55,8 +59,7 @@ if __name__ == '__main__':
     fnames = os.listdir(mask_dir)
 
     # exclude hidden files like .DS_Store
-    fnames = [f for f in fname if f[0] != '.']
+    fnames = [f for f in fnames if f[0] != '.']
  
-    fnames = [os.path.splitext(f)[0] for f in fnames]
     print('fnames in maskdir count', len(fnames))
     process_images(fnames, mask_dir, image_dir, output_dir)
