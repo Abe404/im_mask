@@ -26,7 +26,7 @@ parser.add_argument('--maskdir',
 
 parser.add_argument('--outputdir',
                     help=('location of directory where masked images will be saved'),
-                    type=int, required=True)
+                    required=True)
 
 
 def save_masked_image(fname, mask_dir, image_dir, masked_dir):
