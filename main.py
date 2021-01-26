@@ -39,7 +39,7 @@ def save_masked_image(fname, mask_dir, image_dir, masked_dir):
     glob_results = glob(im_path)
     im = imread(glob_results[0])
     im[seg==0] = 0
-    imsave(os.path.join(masked_dir, os.path.basename(fname) + '.jpg'), im)
+    imsave(os.path.join(masked_dir, os.path.splitext(fname)[0] + '.jpg'), im)
 
 
 def process_images(mask_fnames, mask_dir, image_dir, masked_dir):
