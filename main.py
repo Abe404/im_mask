@@ -38,7 +38,7 @@ def save_masked_image(fname, mask_dir, image_dir, masked_dir):
     im_path = os.path.join(image_dir, os.path.splitext(fname)[0]) + '.*'
     glob_results = glob(im_path)
     im = imread(glob_results[0])
-    im[seg==0] = 0
+    im[seg==0] = 255 # make background white.
     imsave(os.path.join(masked_dir, os.path.splitext(fname)[0] + '.jpg'), im)
 
 
